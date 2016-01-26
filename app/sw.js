@@ -21,4 +21,54 @@
 
 'use strict';
 
+console.log('Started', self);
+self.addEventListener('install', function(event) {
+  self.skipWaiting();
+  console.log('Installed', event);
+});
+self.addEventListener('activate', function(event) {
+  console.log('Activated', event);
+});
+self.addEventListener('push', function(event) {
+  console.log('Push message', event);
+  var title = 'Push message';
+  event.waitUntil(
+    self.registration.showNotification(title, {
+      body: 'The Message',
+      icon: 'images/icon.png',
+      tag: 'my-tag'
+    }));
+});
+self.addEventListener('notificationclick', function(event) {
+    console.log('Notification click: tag ', event.notification.tag);
+    event.notification.close();
+    var url = 'https://youtu.be/gYMkEMCHtJ4';
+    event.waitUntil(
+        clients.matchAll({
+            type: 'window'
+        })
+        .then(function(windowClients) {
+            for (var i = 0; i < windowClients.length; i++) {
+                var client = windowClients[i];
+                if (client.url === url && 'focus' in client) {
+                    return client.focus();
+                }
+            }
+            if (clients.openWindow) {
+                return clients.openWindow(url);
+            }
+        })
+    );
+});
+
+
 // TODO
+
+
+
+
+// AIzaSyB7ZTuniS4usBeydreyYsIhgdi2Y3Av_80
+// cH-pciIrsdA:APA91bHkyAdXh7EjYwef0sd…AyjjcfB5Y82jP_p37ieY2mj8AV72SQrqGkf3eurL0fCmo443_N3LTnd_JdLcPIRYr7uKj4kPGO
+// cH-pciIrsdA:APA91bHkyAdXh7EjYwef0sdF5GvM_8GfuhKtmQu0wmem3GP0gQCJT_wE7H4_xuOGDnAyjjcfB5Y82jP_p37ieY2mj8AV72SQrqGkf3eurL0fCmo443_N3LTnd_JdLcPIRYr7uKj4kPGO
+// cH-pciIrsdA:APA91bHkyAdXh7EjYwef0sdF5GvM_8GfuhKtmQu0wmem3GP0gQCJT_wE7H4_xuOGDnAyjjcfB5Y82jP_p37ieY2mj8AV72SQrqGkf3eurL0fCmo443_N3LTnd_JdLcPIRYr7uKj4kPGO
+// https://android.googleapis.com/gcm/send/cH-pciIrsdA:APA91bHkyAdXh7EjYwef0sdF5GvM_8GfuhKtmQu0wmem3GP0gQCJT_wE7H4_xuOGDnAyjjcfB5Y82jP_p37ieY2mj8AV72SQrqGkf3eurL0fCmo443_N3LTnd_JdLcPIRYr7uKj4kPGO
