@@ -53,6 +53,3 @@ function unsubscribe() {
     subscribeButton.textContent = 'Subscribe';
   });
 }
-
-
-alert(isSubscribed);
