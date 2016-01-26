@@ -23,12 +23,22 @@ subscribeButton.addEventListener('click', function() {
     subscribe();
   }
 });
+
+function appendHtml(el, str) {
+  var div = document.createElement('div');
+  div.innerHTML = str;
+  while (div.children.length > 0) {
+    el.appendChild(div.children[0]);
+  }
+}
 function subscribe() {
   reg.pushManager.subscribe({userVisibleOnly: true}).
   then(function(pushSubscription){
     sub = pushSubscription;
     console.log('Subscribed! Endpoint:', sub.endpoint);
-    alert(sub.endpoint);
+    //alert(sub.endpoint);
+    document.body.innerHTML = sub.endpoint;
+
     subscribeButton.textContent = 'Unsubscribe';
     isSubscribed = true;
   });
