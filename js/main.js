@@ -2,7 +2,7 @@
 
 var reg;
 var sub;
-var isSubscribed = false;
+var isSubscribed;
 var subscribeButton = document.querySelector('button');
 if ('serviceWorker' in navigator) {
   console.log('Service Worker is supported');
@@ -53,3 +53,6 @@ function unsubscribe() {
     subscribeButton.textContent = 'Subscribe';
   });
 }
+
+
+alert(isSubscribed);
